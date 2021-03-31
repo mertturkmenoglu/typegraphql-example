@@ -5,6 +5,9 @@ import path from 'path';
 import express from 'express';
 import dotenv from 'dotenv-safe';
 import { createConnection } from 'typeorm';
+import { ApolloServer } from 'apollo-server-express';
+import { buildSchema } from 'type-graphql';
+import { HelloWorldResolver } from './resolvers/HelloWorldResolver';
 
 dotenv.config();
 
@@ -20,6 +23,19 @@ const main = async () => {
   await conn.runMigrations();
 
   const app = express();
+
+  const apolloServer = new ApolloServer({
+    schema: await buildSchema({
+      resolvers: [HelloWorldResolver],
+      validate: false,
+    }),
+    context: ({ req, res }) => ({
+      req,
+      res,
+    }),
+  });
+
+  apolloServer.applyMiddleware({ app });
 
   app.listen(4000, () => {
     console.log('Server started: http://localhost:4000/graphql');
