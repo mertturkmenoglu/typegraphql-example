@@ -1,0 +1,8 @@
+{
+  "name": "typegraphql-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/mertturkmenoglu/typegraphql-example.git",
+  "author": "Mert <mertturkmenoglu99@gmail.com>",
+  "license": "MIT"
+}
